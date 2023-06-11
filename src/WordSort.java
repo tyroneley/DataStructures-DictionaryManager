@@ -1,6 +1,7 @@
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -8,6 +9,8 @@ import java.util.Comparator;
 
 public class WordSort {
     public static HashMap<String, String> bucketSort(HashMap<String, String> hashMap) {
+        long timeStart = System.nanoTime();
+
         List<List<Map.Entry<String, String>>> buckets = new ArrayList<>(26);
 
         for (int i = 0; i < 26; i++) {
@@ -33,10 +36,16 @@ public class WordSort {
             }
         }
 
+        long timeEnd = System.nanoTime();
+        long sortingTime = TimeUnit.MILLISECONDS.convert(timeEnd - timeStart, TimeUnit.NANOSECONDS);
+        System.out.println("[BUCKET SORT] SORTING TIME: " + sortingTime + "ms");
+
         return sortedHashMap;
     }
 
     public static HashMap<String, String> quickSort(HashMap<String, String> hashMap) {
+        long timeStart = System.nanoTime();
+
         List<Map.Entry<String, String>> entries = new ArrayList<>(hashMap.entrySet());
 
         quickSort(entries, 0, entries.size() - 1);
@@ -47,10 +56,16 @@ public class WordSort {
             sortedHashMap.put(entry.getKey(), entry.getValue());
         }
 
+        long timeEnd = System.nanoTime();
+        long sortingTime = TimeUnit.MILLISECONDS.convert(timeEnd - timeStart, TimeUnit.NANOSECONDS);
+        System.out.println("[QUICK SORT] SORTING TIME: " + sortingTime + "ms");
+
         return sortedHashMap;
     }
 
     public static HashMap<String, String> radixSort(HashMap<String, String> hashMap) {
+        long timeStart = System.nanoTime();
+
         List<Map.Entry<String, String>> entries = new ArrayList<>(hashMap.entrySet());
 
         int maxLength = getMaxKeyLength(entries);
@@ -62,6 +77,10 @@ public class WordSort {
         for (Map.Entry<String, String> entry : entries) {
             sortedHashMap.put(entry.getKey(), entry.getValue());
         }
+
+        long timeEnd = System.nanoTime();
+        long sortingTime = TimeUnit.MILLISECONDS.convert(timeEnd - timeStart, TimeUnit.NANOSECONDS);
+        System.out.println("[RADIX SORT] SORTING TIME: " + sortingTime + "ms");
 
         return sortedHashMap;
     }

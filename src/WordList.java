@@ -24,7 +24,7 @@ public class WordList extends JPanel {
             row.add(word);
             row.add(wordsList.get(word));
             rows.add(row);
-        }
+        }  
 
         table = new JTable(rows, headings);
         list = new JScrollPane(table, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED); 

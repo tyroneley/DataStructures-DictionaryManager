@@ -80,6 +80,7 @@ public class Menu extends JFrame {
         Dictionary.loadFile();
 
         WordList.updateList();
+        
         loadWordsList();
         addDataMenu(menuBar);
         generateToolBar();
@@ -277,6 +278,7 @@ public class Menu extends JFrame {
         JMenu dataMenu = new JMenu("File");
 
         JMenuItem option = new JMenuItem("Save");
+        dataMenu.add(option);
         option.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
