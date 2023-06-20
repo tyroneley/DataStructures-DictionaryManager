@@ -1,15 +1,15 @@
-import java.io.*;
 import java.util.HashMap;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.FileReader;
+import java.io.IOException;
 
 public class Dictionary {
     private static HashMap<String, String> wordsList = new HashMap<String, String>();
 
     public static HashMap<String, String> getWords() {
         return wordsList;
-    }
-
-    public static void setWords(HashMap<String, String> newWords) {
-        wordsList = newWords;
     }
 
     public static void addWord(String newWord, String definition) {
@@ -25,19 +25,27 @@ public class Dictionary {
     }
 
     public static void saveFile() {
-        try (ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream("words.txt"))) {
-            outputStream.writeObject(wordsList);
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("src/words.txt"))) {
+            String wordData = "";
+            for (String word : wordsList.keySet()) {
+                wordData = word + ";" + wordsList.get(word);
+                writer.write(wordData);
+            }
+            writer.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     public static void loadFile() {
-        try (ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream("words.txt"))) {
-            @SuppressWarnings("unchecked")
-            HashMap<String, String> temp = (HashMap<String, String>) inputStream.readObject();
-            wordsList = temp;
-        } catch (IOException | ClassNotFoundException e) {
+        try (BufferedReader reader = new BufferedReader(new FileReader("src/words.txt"))) {
+            String wordData = "";
+            while ((wordData = reader.readLine()) != null) {
+                String[] dataTable = wordData.split(";");
+                wordsList.put(dataTable[0], dataTable[1]);
+            }
+            reader.close();
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }

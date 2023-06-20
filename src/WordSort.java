@@ -1,15 +1,19 @@
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.concurrent.TimeUnit;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
 public class WordSort {
-    public static HashMap<String, String> bucketSort(HashMap<String, String> hashMap) {
-        long timeStart = System.nanoTime();
+    static double get_Time(long timeStart, long timeEnd) {
+        double elapsedTime = (timeEnd - timeStart);
+        return elapsedTime;
+    }
+
+    public static HashMap<String, String> bucketSort(HashMap<String, String> hashMap) { 
+        long timeStart = System.currentTimeMillis();
 
         List<List<Map.Entry<String, String>>> buckets = new ArrayList<>(26);
 
@@ -36,15 +40,15 @@ public class WordSort {
             }
         }
 
-        long timeEnd = System.nanoTime();
-        long sortingTime = TimeUnit.MILLISECONDS.convert(timeEnd - timeStart, TimeUnit.NANOSECONDS);
+        long timeEnd = System.currentTimeMillis();
+        double sortingTime = get_Time(timeStart, timeEnd);
         System.out.println("[BUCKET SORT] SORTING TIME: " + sortingTime + "ms");
 
         return sortedHashMap;
     }
 
     public static HashMap<String, String> quickSort(HashMap<String, String> hashMap) {
-        long timeStart = System.nanoTime();
+        long timeStart = System.currentTimeMillis();
 
         List<Map.Entry<String, String>> entries = new ArrayList<>(hashMap.entrySet());
 
@@ -56,15 +60,16 @@ public class WordSort {
             sortedHashMap.put(entry.getKey(), entry.getValue());
         }
 
-        long timeEnd = System.nanoTime();
-        long sortingTime = TimeUnit.MILLISECONDS.convert(timeEnd - timeStart, TimeUnit.NANOSECONDS);
+        long timeEnd = System.currentTimeMillis();
+        double sortingTime = get_Time(timeStart, timeEnd);
         System.out.println("[QUICK SORT] SORTING TIME: " + sortingTime + "ms");
+
 
         return sortedHashMap;
     }
 
     public static HashMap<String, String> radixSort(HashMap<String, String> hashMap) {
-        long timeStart = System.nanoTime();
+        long timeStart = System.currentTimeMillis();
 
         List<Map.Entry<String, String>> entries = new ArrayList<>(hashMap.entrySet());
 
@@ -78,13 +83,14 @@ public class WordSort {
             sortedHashMap.put(entry.getKey(), entry.getValue());
         }
 
-        long timeEnd = System.nanoTime();
-        long sortingTime = TimeUnit.MILLISECONDS.convert(timeEnd - timeStart, TimeUnit.NANOSECONDS);
+        long timeEnd = System.currentTimeMillis();
+        double sortingTime = get_Time(timeStart, timeEnd);
         System.out.println("[RADIX SORT] SORTING TIME: " + sortingTime + "ms");
 
         return sortedHashMap;
     }
 
+    // this method was taken from StackOverflow
     private static void quickSort(List<Map.Entry<String, String>> entries, int low, int high) {
         if (low < high) {
             
@@ -95,6 +101,7 @@ public class WordSort {
         }
     }
 
+    // this method was taken from StackOverflow
     private static int partition(List<Map.Entry<String, String>> entries, int low, int high) {
         String pivot = entries.get(high).getKey().toUpperCase();
 
@@ -112,6 +119,7 @@ public class WordSort {
         return i + 1;
     }
 
+    // this method was taken from StackOverflow
     private static int getMaxKeyLength(List<Map.Entry<String, String>> entries) {
         int maxLength = 0;
         for (Map.Entry<String, String> entry : entries) {
@@ -123,6 +131,7 @@ public class WordSort {
         return maxLength;
     }
 
+    // this method was taken from StackOverflow
     private static void radixSort(List<Map.Entry<String, String>> entries, int maxLength) {
         for (int i = maxLength - 1; i >= 0; i--) {
             List<List<Map.Entry<String, String>>> buckets = new ArrayList<>(26);
